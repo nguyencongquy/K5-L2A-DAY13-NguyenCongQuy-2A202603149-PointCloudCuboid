@@ -2,7 +2,7 @@
 
 ## 1. Kết luận trước
 - **Thông tin chung:** Mã số học viên `2A202603149` · Task CVAT `D13-2A202603149` · 10 frame được giao: `s01f05`, `s01f40`, `s02f29`, `s02f54`, `s03f05`, `s03f41`, `s04f02`, `s04f40`, `s05f04`, `s05f45`.
-- **Môi trường làm việc:** macOS (Apple Silicon) · Trình duyệt Google Chrome · Phiên bản CVAT Server `2.74.1` (`cvat-sdk 2.83.0`, Python `3.11`).
+- **Môi trường làm việc:** macOS (Apple Silicon) · Trình duyệt Google Chrome · Phiên bản CVAT Server `2.74.1` (`cvat-sdk 2.83.0`, Python `3.11`) · Đổi kiểm cùng: `2A202603206`.
 - **Tóm tắt kết quả:** Toàn bộ 10 frame có tổng cộng **94 cuboid** dạng `Shape` (phân bố: `s01f05=11`, `s01f40=14`, `s02f29=6`, `s02f54=7`, `s03f05=10`, `s03f41=5`, `s04f02=18`, `s04f40=5`, `s05f04=10`, `s05f45=8`); frame ít nhất có **5 cuboid** (`s03f41`, `s04f40`) do đây là đoạn đường thoáng giữa hai nút giao, ít phương tiện trong bán kính `30.0 m`. Kết quả `selfcheck` ghi nhận **8/94 cuboid** có cảnh báo gợi ý (đều là cờ điểm sát ngoài mép do tán cây/rào chắn cạnh vật thể, `0` hộp rỗng, `0` hộp lơ lửng/chìm, `0` hộp chồng lấn). Phần tự tin nhất là độ cao đáy chạm mặt đường (`ground_gap_m ≈ 0.04 m`), phân loại class, thuộc tính `occluded` và hướng `yaw` trên làn chính; phần khó hơn là ước lượng chiều dài thực của các xe ở xa `35.0–39.0 m` khi chỉ thấy một mặt cản xe.
 
 **Cách thao tác CVAT 3D đã thực hiện:**
@@ -92,7 +92,7 @@ Số liệu trích xuất trực tiếp từ `submission/D13-2A202603149-bangA.c
 - **Tự kiểm và chỉnh sửa sau `preview` / `selfcheck`:**
   - **Các cuboid đã sửa sau khi kiểm tra `preview` và `selfcheck`:** (1) Tại `s05f45`, sửa nhãn chiếc xe ben công trình màu xanh ở nhánh phải từ `Bus` về đúng `Truck` và xoay hộp xe tải xanh ở nhánh trái (`idx=3`) về đúng góc đường ngang `192.0°`; (2) Tại `s03f05`, xoay hộp xe con bị khuất ở làn trái (`idx=9`) từ `182.0°` về đúng `270.0°` dọc làn cùng chiều, bổ sung các xe con gần hàng rào ở `s02f29`, `s02f54` kèm bật `occluded = 1` và xóa hộp nhiễu lùm cây ở `s05f04`.
   - **Các cảnh báo giữ nguyên kèm lý do:** 8 cờ `điểm sát ngay ngoài mép` còn lại (`s01f05 #4`, `s01f40 #2`, `s01f40 #5`, `s02f54 #1`, `s03f05 #9`, `s03f41 #4`, `s04f02 #15`, `s05f04 #6`) được giữ nguyên sau khi kiểm tra lại point cloud vì các điểm nằm trong lớp vỏ `0.25 m` bên ngoài hộp thực chất thuộc về tán cây phân cách, hàng rào kim loại sát mép làn đường, trụ mái che trạm dịch vụ hoặc cây xanh vỉa hè sát người đi bộ; nếu nới rộng hộp để bao các điểm đó thì kích thước hộp sẽ bị phình sai kích thước thật của vật thể.
-- **Đổi kiểm hai con số với Bảng A:** Đã rà soát đối chiếu trực tiếp trên màn hình hai con số ở Mục 5 là `z_bottom = -1.774 m` (của `s01f40 #1`, tính từ `z = -0.999 m` và `height = 1.550 m`) và `dist_m = 38.87 m` (của `s01f05 #11`, tính từ `x = 5.268 m, y = 38.511 m`): cả hai con số đều **khớp chính xác** với `D13-2A202603149-bangA.csv` (làm độc lập nên tự kiểm chéo hai lượt trên màn hình, không gửi file CSV).
+- **Đổi kiểm chéo:** Đã thực hiện đổi kiểm trực tiếp trên màn hình với học viên mã số `2A202603206` đối chiếu hai con số ở Mục 5 là `z_bottom = -1.774 m` (của `s01f40 #1`, kiểm từ `z = -0.999 m` và `height = 1.550 m`) và `dist_m = 38.87 m` (của `s01f05 #11`, kiểm từ `x = 5.268 m, y = 38.511 m`): kết quả cả hai con số đều **khớp chính xác** với `D13-2A202603149-bangA.csv` (chỉ đối chiếu trên màn hình, không gửi file CSV).
 
 ## 6. Ý nghĩa của nhãn, cách dùng AI và điều còn chưa chắc
 - **(a) Ý nghĩa của nhãn đối với mô hình học máy 3D:**
